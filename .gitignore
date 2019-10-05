@@ -1,0 +1,105 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.ropeproject
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.python-version
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+# Too early to add these to gitignore
+#locale/
+#*.mo
+#*.po
+#*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# Local settings
+settings_local.py
+guni_local.py
+
+# bower
+bower_components
+
+# gulp
+node_modules/
+webpack_cache/
+assets/*/css/main.css
+
+
+
+# redis
+dump.rdb
+# macosx
+*.DS_Store
+
+assets/*/CACHE
+
+.idea/
+.vscode/
+
+celerybeat-schedule
+celerybeat.pid
+
+# vim
+*.swp
+*.un~
+#docs
+docs/_build
+docs/_static
+docs/_template
+
+.tern-project
+.tern-port
+TAGS
+.venv
+
+# emacs tmp files
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# robotframework
+scripts/xpro_test/log.html
+scripts/xpro_test/output.xml
+scripts/xpro_test/report.html
+.bashrc
