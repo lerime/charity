@@ -6,10 +6,11 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework import mixins
 
-
-from app.api.serializers import StudentSerializer
+from app.api.serializers import StudentSerializer, AphorismSerializer, FaqSerializer, ReportMessageSerializer, \
+    QuestionSerializer
 from app.api.helpers import is_student_exist, create_student, is_login_data_valid
-from app.api.models import Student
+from app.api.models import Student, Aphorism, Faq, ReportMessage, Question
+
 
 class UserLoginApiView(APIView):
     serializer_class = StudentSerializer
@@ -34,12 +35,11 @@ class UserLoginApiView(APIView):
         })
 
 
-class StudentViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
+class StudentViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = StudentSerializer
     queryset = Student.objects.all()
 
     def create(self, request):
-
         data = request.data
         if is_student_exist(data):
             return Response({
@@ -52,3 +52,24 @@ class StudentViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
             'error': False,
             'status': '200'
         })
+
+
+class AphorismViewSet(viewsets.ModelViewSet):
+    queryset = Aphorism.objects.all()
+    serializer_class = AphorismSerializer
+
+
+class FaqViewSet(viewsets.ModelViewSet):
+    queryset = Faq.objects.all()
+    serializer_class = FaqSerializer
+
+
+class ReportMessageViewSet(viewsets.ModelViewSet):
+    queryset = ReportMessage.objects.all()
+    serializer_class = ReportMessageSerializer
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
