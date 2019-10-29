@@ -26,8 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,8 +33,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'app.api',
-    'rest_framework'
+    'app.account',
+    'app.aphorism',
+    'app.faq',
+    'app.question',
+    'app.report',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +78,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'app.api.authentication.StudentAuthentication',  # <-- And here
+
+    ],
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
 }
 
 # Database
@@ -127,3 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# AUTH_USER_MODEL = 'api.User'
+
+APPEND_SLASH = False
