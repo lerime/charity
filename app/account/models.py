@@ -30,13 +30,13 @@ class User(AbstractBaseUser):
         abstract = True
 
 
-class Student(User):
-    teacher = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="students")
-    group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='groups')
-
-
 class Teacher(User):
     group_size = models.PositiveIntegerField()
+
+
+class Student(User):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True, related_name="students")
+    group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='groups')
 
 
 class Group(models.Model):

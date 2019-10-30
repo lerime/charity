@@ -83,7 +83,8 @@ REST_FRAMEWORK = {
         'app.api.authentication.StudentAuthentication',  # <-- And here
 
     ],
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }
 
 # Database
@@ -136,6 +137,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# AUTH_USER_MODEL = 'api.User'
+# AUTH_USER_MODEL = 'account.BaseUser'
 
 APPEND_SLASH = False
