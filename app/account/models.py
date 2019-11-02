@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
 
 
 class Teacher(User):
-    group_size = models.PositiveIntegerField()
+    group_size = models.PositiveIntegerField(default=0)
 
 
 class Student(User):
@@ -50,5 +50,12 @@ class Group(models.Model):
 class StudentAuthToken(Token):
     user = models.OneToOneField(
         Student, related_name='stu_auth_token',
+        on_delete=models.CASCADE
+    )
+
+
+class TeacherAuthToken(Token):
+    user = models.OneToOneField(
+        Teacher, related_name='tch_auth_token',
         on_delete=models.CASCADE
     )

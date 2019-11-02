@@ -1,6 +1,6 @@
 from enum import Enum
 
-from app.account.models import Student, Teacher, StudentAuthToken
+from app.account.models import Student, Teacher, StudentAuthToken, TeacherAuthToken
 
 
 class LoginEnum(Enum):
@@ -11,3 +11,4 @@ class LoginEnum(Enum):
 
 class TokenEnum(Enum):
     student = StudentAuthToken
+    teacher = TeacherAuthToken

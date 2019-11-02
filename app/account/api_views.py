@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from app.account.enums import LoginEnum, TokenEnum
-from app.account.helpers import is_student_exist, create_student, validate_login_data
-from app.account.models import Student, Group
-from app.account.serializers import StudentSerializer, GroupSerializer
+from app.account.helpers import is_user_exist, create_teacher, create_student, validate_login_data
+from app.account.models import Student, Group, Teacher
+from app.account.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
 
 
 class UserLoginApiView(APIView):
@@ -43,13 +43,33 @@ class StudentViewSet(viewsets.ModelViewSet):
 
     def create(self, request, **kwargs):
         data = request.data
-        if is_student_exist(data):
+        if is_user_exist('student', data):
             return Response({
                 'error': False,
                 'status': 400,
                 'errors': "There is another user"
             }, status=status.HTTP_400_BAD_REQUEST)
         create_student(data)
+        return Response({
+            'error': False,
+            'status': '200'
+        })
+
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TeacherSerializer
+    queryset = Teacher.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        if is_user_exist('teacher', data):
+            return Response({
+                'error': False,
+                'status': 400,
+                'errors': "There is another user"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        create_teacher(data)
         return Response({
             'error': False,
             'status': '200'
