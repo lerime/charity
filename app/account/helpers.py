@@ -26,8 +26,6 @@ def create_student(data):
 
 
 def validate_login_data(data):
-    fullname = data.get('fullname')
-    phone_number = data.get('phone_number')
     username = data.get('username')
     password = data.get('password')
 
