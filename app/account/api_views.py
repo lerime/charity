@@ -1,7 +1,6 @@
 from django.contrib.auth import login as auth_login
 from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import status, exceptions, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -23,6 +22,8 @@ class UserLoginApiView(APIView):
 
         model = LoginEnum[user_type].value if user_type else LoginEnum.default.value
         user = get_object_or_404(model, username=request.data.get('username'))
+        if not user.check_password(request.data.get('password')):
+            raise exceptions.AuthenticationFailed()
         auth_login(request, user)
         token = generate_token(
             user=user, user_type=user_type, token_model=TokenEnum[user_type].value)

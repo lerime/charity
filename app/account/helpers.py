@@ -1,3 +1,5 @@
+from django.contrib.auth.hashers import make_password
+
 from rest_framework.exceptions import ValidationError
 
 from app.account.models import Student
@@ -18,7 +20,7 @@ def create_student(data):
     student.phone_number = data.get('phone_number')
     student.email = data.get('email')
     student.gender = data.get('gender', 'F')
-    student.password = data.get('password')
+    student.password = make_password(data.get('password'))
 
     student.save()
 
