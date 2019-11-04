@@ -7,6 +7,7 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
+        extra_kwargs = {'student_id': {'required': True}}
 
 
 class ReportMessageSerializer(serializers.ModelSerializer):
