@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app.faq',
     'app.question',
     'app.report',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
