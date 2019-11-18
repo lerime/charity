@@ -52,3 +52,14 @@ def validate_login_data(data):
         raise ValidationError('Username is required')
     if password in ['', None]:
         raise ValidationError('Password is required')
+
+
+def set_users_group(student_id_list, group_id):
+    for student_id in student_id_list:
+        try:
+            student = Student.objects.filter(id=student_id)
+            student = student.first()
+            student.group_id = group_id
+            student.save()
+        except Student.DoesNotExist as e:
+            pass

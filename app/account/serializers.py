@@ -17,6 +17,17 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+
+    def validate(self, attrs):
+        #todo add controls
+        return attrs
+
+    def create(self, validated_data):
+        #
+        validated_data.pop('student_ids')
+
+        return Group.objects.create(**validated_data)
+
     class Meta:
         model = Group
         fields = '__all__'

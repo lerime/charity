@@ -1,5 +1,7 @@
 from django.contrib.auth import login as auth_login
+from django.db import transaction
 from django.shortcuts import get_object_or_404
+from rest_framework import mixins
 from rest_framework import status, exceptions, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
@@ -7,9 +9,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from app.account.enums import LoginEnum, TokenEnum
-from app.account.helpers import is_user_exist, create_teacher, create_student, validate_login_data
+from app.account.helpers import is_user_exist, create_teacher, create_student, validate_login_data, set_users_group
 from app.account.models import Student, Group, Teacher
 from app.account.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
+from app.report.helpers import create_report
 
 
 class UserLoginApiView(APIView):
@@ -76,6 +79,22 @@ class TeacherViewSet(viewsets.ModelViewSet):
         })
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.UpdateModelMixin,
+                   viewsets.GenericViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.prefetch_related('groups').all()  # todo add prefetch related configs
+
+    @transaction.atomic()
+    def create(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            serializer = self.serializer_class(data=data)
+            serializer.is_valid(raise_exception=False)
+            group = serializer.save(**data)
+            set_users_group(data.get('student_ids'), group.id)
+            create_report(group)
+            return Response(status=status.HTTP_201_CREATED)
+        except Exception as e:
+            pass

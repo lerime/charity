@@ -36,7 +36,7 @@ class Teacher(User):
 
 class Student(User):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True, related_name="students")
-    group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='groups')
+    group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='students')
 
 
 class Group(models.Model):
