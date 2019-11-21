@@ -12,7 +12,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 class StudentLoginSerializer(StudentSerializer):
     token = serializers.CharField()
-    course_id = serializers.CharField(source='group.course_id')
+    course_id = serializers.CharField()
 
     class Meta(StudentSerializer.Meta):
         fields = ('id', 'token', 'fullname', 'group_id', 'course_id')

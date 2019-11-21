@@ -38,6 +38,11 @@ class Student(User):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True, related_name="students")
     group = models.ForeignKey('Group', on_delete=models.CASCADE, null=True, blank=True, related_name='students')
 
+    @property
+    def course_id(self):
+        if self.group:
+            return self.group.course_id
+
 
 class Group(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
