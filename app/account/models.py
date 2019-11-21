@@ -44,6 +44,7 @@ class Group(models.Model):
     course = models.OneToOneField('api.Course', on_delete=models.CASCADE, null=True, blank=True)
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, null=True, blank=True)
     size = models.PositiveIntegerField()
+    description = models.CharField(max_length=225, null=True, blank=True)
     create_at = models.DateTimeField(auto_now_add=True)
 
 

@@ -11,7 +11,8 @@ from rest_framework.views import APIView
 from app.account.enums import LoginEnum, TokenEnum
 from app.account.helpers import is_user_exist, create_teacher, create_student, validate_login_data, set_users_group
 from app.account.models import Student, Group, Teacher
-from app.account.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
+from app.account.serializers import StudentSerializer,\
+    StudentLoginSerializer, GroupSerializer, TeacherSerializer
 from app.report.helpers import create_report
 
 
@@ -30,8 +31,9 @@ class UserLoginApiView(APIView):
         auth_login(request, user)
         token = generate_token(
             user=user, user_type=user_type, token_model=TokenEnum[user_type].value)
-
-        return Response({'user_id': user.pk, 'token': token.key})
+        user.token = token
+        serializer = StudentLoginSerializer(instance=user)
+        return Response(serializer.data)
 
 
 def generate_token(user, user_type, token_model=Token):
@@ -82,9 +84,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
 class GroupViewSet(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
                    mixins.UpdateModelMixin,
+                   mixins.ListModelMixin,
                    viewsets.GenericViewSet):
     serializer_class = GroupSerializer
-    queryset = Group.objects.prefetch_related('groups').all()  # todo add prefetch related configs
+    queryset = Group.objects.prefetch_related('students').all()  # todo add prefetch related configs
 
     @transaction.atomic()
     def create(self, request, *args, **kwargs):

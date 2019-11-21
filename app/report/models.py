@@ -13,7 +13,7 @@ class Report(models.Model):
     night_pray = models.IntegerField(default=-1)
     evening_super_pray = models.IntegerField(default=-1)
     checked = models.BooleanField(default=False)
-    day = models.DateTimeField(null=True, blank=True)
+    day = models.DateField(null=True, blank=True)
 
 
 class ReportMessage(models.Model):

@@ -10,6 +10,14 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ('id', 'gender', 'group', 'teacher')
 
 
+class StudentLoginSerializer(StudentSerializer):
+    token = serializers.CharField()
+    course_id = serializers.CharField(source='group.course_id')
+
+    class Meta(StudentSerializer.Meta):
+        fields = ('id', 'token', 'fullname', 'group_id', 'course_id')
+
+
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
