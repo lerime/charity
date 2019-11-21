@@ -36,7 +36,7 @@ class ReportViewSet(mixins.CreateModelMixin,
         data = request.data
         date = data.get('day') #add control
         report = self.queryset.filter(student_id=data.get('student_id'),
-                                      day=date)
+                                      day=date).first()
         serializer = self.serializer_class(report, data=data)
         serializer.is_valid(raise_exception=False)
         serializer.save()
